@@ -37,6 +37,6 @@ ehthumbs.db
 Thumbs.db
 
 #Yfinance cache
-yfinance_data/pycache/*
-pycache/*
-.pyc
+.yfinance_data/__pycache__/*
+.__pycache__/*
+*.pyc
