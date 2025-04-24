@@ -19,5 +19,6 @@ def get_data():
     print(dataframe[:3])
     train, test = split_data(dataframe) #train_test_split(dataframe, train_size=0.7)
     print("Size of train and test: ", train.size, test.size)
+
     
 get_data()
