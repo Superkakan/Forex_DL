@@ -3,7 +3,7 @@ from tensorflow import keras
 from keras import layers, Sequential
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, accuracy_score
 
 #def build_lstm_model(input_shape):
 #    model = Sequential([
@@ -146,18 +146,21 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01):
     mse = mean_squared_error(targets, preds)
     mae = mean_absolute_error(targets,preds)
     r2 = r2_score(targets, preds)
-    
+    diff_percentage = []
+    print("Size of preds and targets: ", preds.size, targets.size)
+    for i in range(preds.size):
+        diff = 100*np.abs(preds[i] - targets[i])/np.abs(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+        diff_percentage.append(diff)
     #Perhaps move results to separate visualization function
     #Add percentage error function
-    
     print("")
     print(f"Validation MSE: {mse:.6f}")
     print(f"Validation MAE: {mae:.6f}")
     print(f"Validation R2: {r2:.4f}")
     print("")
 
-    print("Predictions : Actual")
-    print(np.c_[preds,targets])
+    print("Predictions : Actual : Percentage Difference")
+    print(np.c_[preds,targets, diff_percentage])
 
 
 

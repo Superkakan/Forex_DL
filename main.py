@@ -6,5 +6,5 @@ from sklearn.preprocessing import MinMaxScaler
 
 def start_model():
     train, test, scaler = data_preproccesing.get_data()
-    lstm.run_model(train, test, scaler, epochs = 2, )
+    lstm.run_model(train, test, scaler, epochs = 1, )
 start_model()
