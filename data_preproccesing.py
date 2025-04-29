@@ -14,7 +14,6 @@ def get_data():
         yfinance_fetcher.download_data()
 
     dataframe = pd.read_csv("yfinance_data/eurusd_yf.csv")
-    #Find a way to remove index of rows
 
     dataframe = dataframe.drop(index=0) #Ticker
     dataframe = dataframe.drop(index=1) #Datetime

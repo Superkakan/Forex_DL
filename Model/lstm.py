@@ -157,6 +157,7 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01):
     print(f"Validation MSE: {mse:.6f}")
     print(f"Validation MAE: {mae:.6f}")
     print(f"Validation R2: {r2:.4f}")
+    print(f"Mean Percentage Difference: {np.mean(diff_percentage):.2f}%")
     print("")
 
     print("Predictions : Actual : Percentage Difference")
