@@ -1,10 +1,10 @@
-import tensorflow as tf
-from tensorflow import keras
-from keras import layers, Sequential
+#import tensorflow as tf
+#from tensorflow import keras
+#from keras import layers, Sequential
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, accuracy_score
-
+import sys
 #def build_lstm_model(input_shape):
 #    model = Sequential([
 #        layers.LSTM(64, return_sequences=True, input_shape=input_shape),
@@ -33,7 +33,6 @@ def d_tanh(x):
 
 
 class LSTMCell:
-
 
     def __init__(self, input_dim, hidden_dim):
         self.input_dim = input_dim
@@ -92,12 +91,14 @@ def create_sequences(data, seq_length = 25):
     return np.array(X), np.array(y)
 
 
-def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01):
+def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
     hidden_dim = 10
     input_dim = 1
     seq_len = 25
     
-    
+    if (write_to_file == True):
+        sys.stdout = open("results.txt", "a")
+        print("")
 
     lstm = LSTMCell(input_dim, hidden_dim)
     W_out = np.random.randn(1, hidden_dim) * 0.1 #Output layer weights
@@ -149,19 +150,25 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01):
     diff_percentage = []
     print("Size of preds and targets: ", preds.size, targets.size)
     for i in range(preds.size):
-        diff = 100*np.abs(preds[i] - targets[i])/np.abs(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+        diff = 100*(preds[i] - targets[i])/(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
         diff_percentage.append(diff)
+
+
     #Perhaps move results to separate visualization function
-    #Add percentage error function
-    print("")
-    print(f"Validation MSE: {mse:.6f}")
-    print(f"Validation MAE: {mae:.6f}")
-    print(f"Validation R2: {r2:.4f}")
+    #Add percentage error function with minus
+    #print(f"Validation MSE: {mse:.6f}")
+    #print(f"Validation MAE: {mae:.6f}")
+    #print(f"Validation R2: {r2:.4f}")
+    print("Size of Training Data: ", train_data.size)
+    print("Number of Epochs: ", epochs)
     print(f"Mean Percentage Difference: {np.mean(diff_percentage):.2f}%")
     print("")
 
     print("Predictions : Actual : Percentage Difference")
     print(np.c_[preds,targets, diff_percentage])
+    
+    if (write_to_file == True):
+        sys.stdout.close()
 
 
 

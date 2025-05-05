@@ -1,0 +1,872 @@
+
+Learning rate of 0.01 50 epochs 25 sequence length 25
+Size of train and test:  8617 3693
+Epoch 1: Loss: 0.0019
+Epoch 2: Loss: 0.0007
+Epoch 3: Loss: 0.0007
+Epoch 4: Loss: 0.0007
+Epoch 5: Loss: 0.0007
+Epoch 6: Loss: 0.0007
+Epoch 7: Loss: 0.0007
+Epoch 8: Loss: 0.0007
+Epoch 9: Loss: 0.0007
+Epoch 10: Loss: 0.0007
+Epoch 11: Loss: 0.0007
+Epoch 12: Loss: 0.0007
+Epoch 13: Loss: 0.0007
+Epoch 14: Loss: 0.0007
+Epoch 15: Loss: 0.0007
+Epoch 16: Loss: 0.0007
+Epoch 17: Loss: 0.0007
+Epoch 18: Loss: 0.0007
+Epoch 19: Loss: 0.0007
+Epoch 20: Loss: 0.0007
+Epoch 21: Loss: 0.0007
+Epoch 22: Loss: 0.0007
+Epoch 23: Loss: 0.0007
+Epoch 24: Loss: 0.0007
+Epoch 25: Loss: 0.0007
+Epoch 26: Loss: 0.0007
+Epoch 27: Loss: 0.0007
+Epoch 28: Loss: 0.0007
+Epoch 29: Loss: 0.0007
+Epoch 30: Loss: 0.0007
+Epoch 31: Loss: 0.0007
+Epoch 32: Loss: 0.0007
+Epoch 33: Loss: 0.0007
+Epoch 34: Loss: 0.0007
+Epoch 35: Loss: 0.0007
+Epoch 36: Loss: 0.0007
+Epoch 37: Loss: 0.0007
+Epoch 38: Loss: 0.0007
+Epoch 39: Loss: 0.0007
+Epoch 40: Loss: 0.0007
+Epoch 41: Loss: 0.0007
+Epoch 42: Loss: 0.0007
+Epoch 43: Loss: 0.0007
+Epoch 44: Loss: 0.0007
+Epoch 45: Loss: 0.0007
+Epoch 46: Loss: 0.0007
+Epoch 47: Loss: 0.0007
+Epoch 48: Loss: 0.0007
+Epoch 49: Loss: 0.0007
+Epoch 50: Loss: 0.0007
+Size of preds and targets:  3668 3668
+
+Validation MSE: 0.001952
+Validation MAE: 0.037924
+Validation R2: -1.2615
+Mean Percentage Difference: 3.60 %
+
+Predictions : Actual : Percentage Difference
+[[1.10353651 1.10963166 0.54929424]
+ [1.10354349 1.10950851 0.53762783]
+ [1.10354594 1.10926235 0.51533379]
+ ...
+ [1.10418342 1.13973105 3.11894917]
+ [1.10418455 1.13986087 3.12988386]
+ [1.10418619 1.13960111 3.10765945]]
+
+Learning rate of 0.001 340 epochs 25 sequence length 25
+Size of train and test:  8617 3693
+Epoch 1: Loss: 0.0136
+Epoch 2: Loss: 0.0062
+Epoch 3: Loss: 0.0062
+Epoch 4: Loss: 0.0062
+Epoch 5: Loss: 0.0062
+Epoch 6: Loss: 0.0062
+Epoch 7: Loss: 0.0062
+Epoch 8: Loss: 0.0062
+Epoch 9: Loss: 0.0062
+Epoch 10: Loss: 0.0062
+Epoch 11: Loss: 0.0062
+Epoch 12: Loss: 0.0062
+Epoch 13: Loss: 0.0062
+Epoch 14: Loss: 0.0062
+Epoch 15: Loss: 0.0062
+Epoch 16: Loss: 0.0062
+Epoch 17: Loss: 0.0061
+Epoch 18: Loss: 0.0061
+Epoch 19: Loss: 0.0061
+Epoch 20: Loss: 0.0061
+Epoch 21: Loss: 0.0061
+Epoch 22: Loss: 0.0061
+Epoch 23: Loss: 0.0061
+Epoch 24: Loss: 0.0061
+Epoch 25: Loss: 0.0061
+Epoch 26: Loss: 0.0061
+Epoch 27: Loss: 0.0061
+Epoch 28: Loss: 0.0061
+Epoch 29: Loss: 0.0061
+Epoch 30: Loss: 0.0061
+Epoch 31: Loss: 0.0060
+Epoch 32: Loss: 0.0060
+Epoch 33: Loss: 0.0060
+Epoch 34: Loss: 0.0060
+Epoch 35: Loss: 0.0060
+Epoch 36: Loss: 0.0060
+Epoch 37: Loss: 0.0060
+Epoch 38: Loss: 0.0060
+Epoch 39: Loss: 0.0060
+Epoch 40: Loss: 0.0060
+Epoch 41: Loss: 0.0060
+Epoch 42: Loss: 0.0060
+Epoch 43: Loss: 0.0060
+Epoch 44: Loss: 0.0060
+Epoch 45: Loss: 0.0060
+Epoch 46: Loss: 0.0059
+Epoch 47: Loss: 0.0059
+Epoch 48: Loss: 0.0059
+Epoch 49: Loss: 0.0059
+Epoch 50: Loss: 0.0059
+Epoch 51: Loss: 0.0059
+Epoch 52: Loss: 0.0059
+Epoch 53: Loss: 0.0059
+Epoch 54: Loss: 0.0059
+Epoch 55: Loss: 0.0059
+Epoch 56: Loss: 0.0059
+Epoch 57: Loss: 0.0059
+Epoch 58: Loss: 0.0059
+Epoch 59: Loss: 0.0059
+Epoch 60: Loss: 0.0059
+Epoch 61: Loss: 0.0058
+Epoch 62: Loss: 0.0058
+Epoch 63: Loss: 0.0058
+Epoch 64: Loss: 0.0058
+Epoch 65: Loss: 0.0058
+Epoch 66: Loss: 0.0058
+Epoch 67: Loss: 0.0058
+Epoch 68: Loss: 0.0058
+Epoch 69: Loss: 0.0058
+Epoch 70: Loss: 0.0058
+Epoch 71: Loss: 0.0058
+Epoch 72: Loss: 0.0058
+Epoch 73: Loss: 0.0058
+Epoch 74: Loss: 0.0058
+Epoch 75: Loss: 0.0058
+Epoch 76: Loss: 0.0057
+Epoch 77: Loss: 0.0057
+Epoch 78: Loss: 0.0057
+Epoch 79: Loss: 0.0057
+Epoch 80: Loss: 0.0057
+Epoch 81: Loss: 0.0057
+Epoch 82: Loss: 0.0057
+Epoch 83: Loss: 0.0057
+Epoch 84: Loss: 0.0057
+Epoch 85: Loss: 0.0057
+Epoch 86: Loss: 0.0057
+Epoch 87: Loss: 0.0057
+Epoch 88: Loss: 0.0057
+Epoch 89: Loss: 0.0057
+Epoch 90: Loss: 0.0057
+Epoch 91: Loss: 0.0057
+Epoch 92: Loss: 0.0056
+Epoch 93: Loss: 0.0056
+Epoch 94: Loss: 0.0056
+Epoch 95: Loss: 0.0056
+Epoch 96: Loss: 0.0056
+Epoch 97: Loss: 0.0056
+Epoch 98: Loss: 0.0056
+Epoch 99: Loss: 0.0056
+Epoch 100: Loss: 0.0056
+Epoch 101: Loss: 0.0056
+Epoch 102: Loss: 0.0056
+Epoch 103: Loss: 0.0056
+Epoch 104: Loss: 0.0056
+Epoch 105: Loss: 0.0056
+Epoch 106: Loss: 0.0056
+Epoch 107: Loss: 0.0056
+Epoch 108: Loss: 0.0055
+Epoch 109: Loss: 0.0055
+Epoch 110: Loss: 0.0055
+Epoch 111: Loss: 0.0055
+Epoch 112: Loss: 0.0055
+Epoch 113: Loss: 0.0055
+Epoch 114: Loss: 0.0055
+Epoch 115: Loss: 0.0055
+Epoch 116: Loss: 0.0055
+Epoch 117: Loss: 0.0055
+Epoch 118: Loss: 0.0055
+Epoch 119: Loss: 0.0055
+Epoch 120: Loss: 0.0055
+Epoch 121: Loss: 0.0055
+Epoch 122: Loss: 0.0055
+Epoch 123: Loss: 0.0055
+Epoch 124: Loss: 0.0054
+Epoch 125: Loss: 0.0054
+Epoch 126: Loss: 0.0054
+Epoch 127: Loss: 0.0054
+Epoch 128: Loss: 0.0054
+Epoch 129: Loss: 0.0054
+Epoch 130: Loss: 0.0054
+Epoch 131: Loss: 0.0054
+Epoch 132: Loss: 0.0054
+Epoch 133: Loss: 0.0054
+Epoch 134: Loss: 0.0054
+Epoch 135: Loss: 0.0054
+Epoch 136: Loss: 0.0054
+Epoch 137: Loss: 0.0054
+Epoch 138: Loss: 0.0054
+Epoch 139: Loss: 0.0054
+Epoch 140: Loss: 0.0054
+Epoch 141: Loss: 0.0053
+Epoch 142: Loss: 0.0053
+Epoch 143: Loss: 0.0053
+Epoch 144: Loss: 0.0053
+Epoch 145: Loss: 0.0053
+Epoch 146: Loss: 0.0053
+Epoch 147: Loss: 0.0053
+Epoch 148: Loss: 0.0053
+Epoch 149: Loss: 0.0053
+Epoch 150: Loss: 0.0053
+Epoch 151: Loss: 0.0053
+Epoch 152: Loss: 0.0053
+Epoch 153: Loss: 0.0053
+Epoch 154: Loss: 0.0053
+Epoch 155: Loss: 0.0053
+Epoch 156: Loss: 0.0053
+Epoch 157: Loss: 0.0053
+Epoch 158: Loss: 0.0052
+Epoch 159: Loss: 0.0052
+Epoch 160: Loss: 0.0052
+Epoch 161: Loss: 0.0052
+Epoch 162: Loss: 0.0052
+Epoch 163: Loss: 0.0052
+Epoch 164: Loss: 0.0052
+Epoch 165: Loss: 0.0052
+Epoch 166: Loss: 0.0052
+Epoch 167: Loss: 0.0052
+Epoch 168: Loss: 0.0052
+Epoch 169: Loss: 0.0052
+Epoch 170: Loss: 0.0052
+Epoch 171: Loss: 0.0052
+Epoch 172: Loss: 0.0052
+Epoch 173: Loss: 0.0052
+Epoch 174: Loss: 0.0052
+Epoch 175: Loss: 0.0051
+Epoch 176: Loss: 0.0051
+Epoch 177: Loss: 0.0051
+Epoch 178: Loss: 0.0051
+Epoch 179: Loss: 0.0051
+Epoch 180: Loss: 0.0051
+Epoch 181: Loss: 0.0051
+Epoch 182: Loss: 0.0051
+Epoch 183: Loss: 0.0051
+Epoch 184: Loss: 0.0051
+Epoch 185: Loss: 0.0051
+Epoch 186: Loss: 0.0051
+Epoch 187: Loss: 0.0051
+Epoch 188: Loss: 0.0051
+Epoch 189: Loss: 0.0051
+Epoch 190: Loss: 0.0051
+Epoch 191: Loss: 0.0051
+Epoch 192: Loss: 0.0050
+Epoch 193: Loss: 0.0050
+Epoch 194: Loss: 0.0050
+Epoch 195: Loss: 0.0050
+Epoch 196: Loss: 0.0050
+Epoch 197: Loss: 0.0050
+Epoch 198: Loss: 0.0050
+Epoch 199: Loss: 0.0050
+Epoch 200: Loss: 0.0050
+Epoch 201: Loss: 0.0050
+Epoch 202: Loss: 0.0050
+Epoch 203: Loss: 0.0050
+Epoch 204: Loss: 0.0050
+Epoch 205: Loss: 0.0050
+Epoch 206: Loss: 0.0050
+Epoch 207: Loss: 0.0050
+Epoch 208: Loss: 0.0050
+Epoch 209: Loss: 0.0050
+Epoch 210: Loss: 0.0049
+Epoch 211: Loss: 0.0049
+Epoch 212: Loss: 0.0049
+Epoch 213: Loss: 0.0049
+Epoch 214: Loss: 0.0049
+Epoch 215: Loss: 0.0049
+Epoch 216: Loss: 0.0049
+Epoch 217: Loss: 0.0049
+Epoch 218: Loss: 0.0049
+Epoch 219: Loss: 0.0049
+Epoch 220: Loss: 0.0049
+Epoch 221: Loss: 0.0049
+Epoch 222: Loss: 0.0049
+Epoch 223: Loss: 0.0049
+Epoch 224: Loss: 0.0049
+Epoch 225: Loss: 0.0049
+Epoch 226: Loss: 0.0049
+Epoch 227: Loss: 0.0049
+Epoch 228: Loss: 0.0048
+Epoch 229: Loss: 0.0048
+Epoch 230: Loss: 0.0048
+Epoch 231: Loss: 0.0048
+Epoch 232: Loss: 0.0048
+Epoch 233: Loss: 0.0048
+Epoch 234: Loss: 0.0048
+Epoch 235: Loss: 0.0048
+Epoch 236: Loss: 0.0048
+Epoch 237: Loss: 0.0048
+Epoch 238: Loss: 0.0048
+Epoch 239: Loss: 0.0048
+Epoch 240: Loss: 0.0048
+Epoch 241: Loss: 0.0048
+Epoch 242: Loss: 0.0048
+Epoch 243: Loss: 0.0048
+Epoch 244: Loss: 0.0048
+Epoch 245: Loss: 0.0048
+Epoch 246: Loss: 0.0048
+Epoch 247: Loss: 0.0047
+Epoch 248: Loss: 0.0047
+Epoch 249: Loss: 0.0047
+Epoch 250: Loss: 0.0047
+Epoch 251: Loss: 0.0047
+Epoch 252: Loss: 0.0047
+Epoch 253: Loss: 0.0047
+Epoch 254: Loss: 0.0047
+Epoch 255: Loss: 0.0047
+Epoch 256: Loss: 0.0047
+Epoch 257: Loss: 0.0047
+Epoch 258: Loss: 0.0047
+Epoch 259: Loss: 0.0047
+Epoch 260: Loss: 0.0047
+Epoch 261: Loss: 0.0047
+Epoch 262: Loss: 0.0047
+Epoch 263: Loss: 0.0047
+Epoch 264: Loss: 0.0047
+Epoch 265: Loss: 0.0047
+Epoch 266: Loss: 0.0046
+Epoch 267: Loss: 0.0046
+Epoch 268: Loss: 0.0046
+Epoch 269: Loss: 0.0046
+Epoch 270: Loss: 0.0046
+Epoch 271: Loss: 0.0046
+Epoch 272: Loss: 0.0046
+Epoch 273: Loss: 0.0046
+Epoch 274: Loss: 0.0046
+Epoch 275: Loss: 0.0046
+Epoch 276: Loss: 0.0046
+Epoch 277: Loss: 0.0046
+Epoch 278: Loss: 0.0046
+Epoch 279: Loss: 0.0046
+Epoch 280: Loss: 0.0046
+Epoch 281: Loss: 0.0046
+Epoch 282: Loss: 0.0046
+Epoch 283: Loss: 0.0046
+Epoch 284: Loss: 0.0046
+Epoch 285: Loss: 0.0046
+Epoch 286: Loss: 0.0045
+Epoch 287: Loss: 0.0045
+Epoch 288: Loss: 0.0045
+Epoch 289: Loss: 0.0045
+Epoch 290: Loss: 0.0045
+Epoch 291: Loss: 0.0045
+Epoch 292: Loss: 0.0045
+Epoch 293: Loss: 0.0045
+Epoch 294: Loss: 0.0045
+Epoch 295: Loss: 0.0045
+Epoch 296: Loss: 0.0045
+Epoch 297: Loss: 0.0045
+Epoch 298: Loss: 0.0045
+Epoch 299: Loss: 0.0045
+Epoch 300: Loss: 0.0045
+Epoch 301: Loss: 0.0045
+Epoch 302: Loss: 0.0045
+Epoch 303: Loss: 0.0045
+Epoch 304: Loss: 0.0045
+Epoch 305: Loss: 0.0044
+Epoch 306: Loss: 0.0044
+Epoch 307: Loss: 0.0044
+Epoch 308: Loss: 0.0044
+Epoch 309: Loss: 0.0044
+Epoch 310: Loss: 0.0044
+Epoch 311: Loss: 0.0044
+Epoch 312: Loss: 0.0044
+Epoch 313: Loss: 0.0044
+Epoch 314: Loss: 0.0044
+Epoch 315: Loss: 0.0044
+Epoch 316: Loss: 0.0044
+Epoch 317: Loss: 0.0044
+Epoch 318: Loss: 0.0044
+Epoch 319: Loss: 0.0044
+Epoch 320: Loss: 0.0044
+Epoch 321: Loss: 0.0044
+Epoch 322: Loss: 0.0044
+Epoch 323: Loss: 0.0044
+Epoch 324: Loss: 0.0044
+Epoch 325: Loss: 0.0044
+Epoch 326: Loss: 0.0043
+Epoch 327: Loss: 0.0043
+Epoch 328: Loss: 0.0043
+Epoch 329: Loss: 0.0043
+Epoch 330: Loss: 0.0043
+Epoch 331: Loss: 0.0043
+Epoch 332: Loss: 0.0043
+Epoch 333: Loss: 0.0043
+Epoch 334: Loss: 0.0043
+Epoch 335: Loss: 0.0043
+Epoch 336: Loss: 0.0043
+Epoch 337: Loss: 0.0043
+Epoch 338: Loss: 0.0043
+Epoch 339: Loss: 0.0043
+Epoch 340: Loss: 0.0043
+Size of preds and targets:  3668 3668
+
+Validation MSE: 0.001373
+Validation MAE: 0.031810
+Validation R2: -0.5904
+Mean Percentage Difference: 3.02 %
+
+Predictions : Actual : Percentage Difference
+[[1.10478183 1.10963166 0.43706686]
+ [1.10480951 1.10950851 0.42352123]
+ [1.10480564 1.10926235 0.40177214]
+ ...
+ [1.11044256 1.13973105 2.56977177]
+ [1.11044674 1.13986087 2.58050129]
+ [1.11046681 1.13960111 2.55653539]]
+Mean Percentage Difference: -0.98%
+
+Predictions : Actual : Percentage Difference
+[[ 1.04864759  1.04821801  0.04098217]
+ [ 1.04864783  1.04777873  0.08294685]
+ [ 1.04864526  1.04788852  0.07221568]
+ ...
+ [ 1.04900489  1.13973105 -7.96031345]
+ [ 1.04900482  1.13986087 -7.97080134]
+ [ 1.04900539  1.13960111 -7.94977435]]
+Epoch 1: Loss: 0.0015
+Size of preds and targets:  2437 2437
+
+Mean Percentage Difference: -0.99%
+
+Predictions : Actual : Percentage Difference
+[[ 1.0484759   1.04821801  0.02460215]
+ [ 1.048476    1.04777873  0.06654762]
+ [ 1.04847593  1.04788852  0.05605639]
+ ...
+ [ 1.04855618  1.13973105 -7.99968295]
+ [ 1.04855624  1.13986087 -8.01015522]
+ [ 1.04855637  1.13960111 -7.98917651]]
+
+Epoch 1: Loss: 0.0017
+Size of preds and targets:  2437 2437
+
+Mean Percentage Difference: -0.99%
+
+Predictions : Actual : Percentage Difference
+[[ 1.04851012  1.04821801  0.02786732]
+ [ 1.04851115  1.04777873  0.0699022 ]
+ [ 1.04851262  1.04788852  0.05955784]
+ ...
+ [ 1.04852751  1.13973105 -8.00219854]
+ [ 1.04852765  1.13986087 -8.01266391]
+ [ 1.04852754  1.13960111 -7.99170578]]
+
+Epoch 1: Loss: 0.0015
+Size of preds and targets:  2437 2437
+Mean Percentage Difference: -0.98%
+
+Predictions : Actual : Percentage Difference
+[[ 1.04860504  1.04821801  0.03692213]
+ [ 1.04860558  1.04777873  0.078915  ]
+ [ 1.048605    1.04788852  0.06837393]
+ ...
+ [ 1.04875068  1.13973105 -7.98261746]
+ [ 1.04875069  1.13986087 -7.99309668]
+ [ 1.04875087  1.13960111 -7.97210852]]
+
+Epoch 1: Loss: 0.0018
+Size of preds and targets:  3668 3668
+Mean Percentage Difference: 3.25%
+
+Predictions : Actual : Percentage Difference
+[[ 1.10351054  1.10963166 -0.5516352 ]
+ [ 1.10351294  1.10950851 -0.5403808 ]
+ [ 1.10351326  1.10926235 -0.51828053]
+ ...
+ [ 1.10391815  1.13973105 -3.14222349]
+ [ 1.1039186   1.13986087 -3.15321509]
+ [ 1.10391998  1.13960111 -3.13101945]]
+
+Epoch 1: Loss: 0.0013
+Size of preds and targets:  1206 1206
+Mean Percentage Difference: -3.66%
+
+Predictions : Actual : Percentage Difference
+[[ 1.03799607  1.03842163 -0.04098126]
+ [ 1.03799557  1.03777504  0.02125052]
+ [ 1.03799779  1.03777504  0.02146441]
+ ...
+ [ 1.03753221  1.13973105 -8.96692563]
+ [ 1.03753213  1.13986087 -8.97730085]
+ [ 1.03753164  1.13960111 -8.95659604]]
+
+Epoch 1: Loss: 0.0012
+Size of preds and targets:  1206 1206
+Size of Training Data:  11079
+Mean Percentage Difference: -3.61%
+
+Predictions : Actual : Percentage Difference
+[[ 1.03798733  1.03842163 -0.04182347]
+ [ 1.03798637  1.03777504  0.02036411]
+ [ 1.03798587  1.03777504  0.02031526]
+ ...
+ [ 1.03877639  1.13973105 -8.85776167]
+ [ 1.03877723  1.13986087 -8.86806844]
+ [ 1.03877772  1.13960111 -8.84725249]]
+
+
+Size of train and test:  11079 1231
+Epoch 1: Loss: 0.0017
+Epoch 2: Loss: 0.0013
+Epoch 3: Loss: 0.0013
+Epoch 4: Loss: 0.0013
+Epoch 5: Loss: 0.0013
+Epoch 6: Loss: 0.0013
+Epoch 7: Loss: 0.0013
+Epoch 8: Loss: 0.0013
+Epoch 9: Loss: 0.0013
+Epoch 10: Loss: 0.0013
+Epoch 11: Loss: 0.0013
+Epoch 12: Loss: 0.0012
+Epoch 13: Loss: 0.0012
+Epoch 14: Loss: 0.0012
+Epoch 15: Loss: 0.0012
+Epoch 16: Loss: 0.0012
+Epoch 17: Loss: 0.0012
+Epoch 18: Loss: 0.0012
+Epoch 19: Loss: 0.0012
+Epoch 20: Loss: 0.0012
+Epoch 21: Loss: 0.0012
+Epoch 22: Loss: 0.0012
+Epoch 23: Loss: 0.0012
+Epoch 24: Loss: 0.0012
+Epoch 25: Loss: 0.0012
+Epoch 26: Loss: 0.0012
+Epoch 27: Loss: 0.0012
+Epoch 28: Loss: 0.0012
+Epoch 29: Loss: 0.0012
+Epoch 30: Loss: 0.0012
+Epoch 31: Loss: 0.0012
+Epoch 32: Loss: 0.0012
+Epoch 33: Loss: 0.0012
+Epoch 34: Loss: 0.0012
+Epoch 35: Loss: 0.0011
+Epoch 36: Loss: 0.0011
+Epoch 37: Loss: 0.0011
+Epoch 38: Loss: 0.0011
+Epoch 39: Loss: 0.0011
+Epoch 40: Loss: 0.0011
+Epoch 41: Loss: 0.0011
+Epoch 42: Loss: 0.0011
+Epoch 43: Loss: 0.0011
+Epoch 44: Loss: 0.0011
+Epoch 45: Loss: 0.0011
+Epoch 46: Loss: 0.0011
+Epoch 47: Loss: 0.0011
+Epoch 48: Loss: 0.0011
+Epoch 49: Loss: 0.0011
+Epoch 50: Loss: 0.0011
+Epoch 51: Loss: 0.0011
+Epoch 52: Loss: 0.0011
+Epoch 53: Loss: 0.0011
+Epoch 54: Loss: 0.0011
+Epoch 55: Loss: 0.0011
+Epoch 56: Loss: 0.0011
+Epoch 57: Loss: 0.0011
+Epoch 58: Loss: 0.0011
+Epoch 59: Loss: 0.0011
+Epoch 60: Loss: 0.0010
+Epoch 61: Loss: 0.0010
+Epoch 62: Loss: 0.0010
+Epoch 63: Loss: 0.0010
+Epoch 64: Loss: 0.0010
+Epoch 65: Loss: 0.0010
+Epoch 66: Loss: 0.0010
+Epoch 67: Loss: 0.0010
+Epoch 68: Loss: 0.0010
+Epoch 69: Loss: 0.0010
+Epoch 70: Loss: 0.0010
+Epoch 71: Loss: 0.0010
+Epoch 72: Loss: 0.0010
+Epoch 73: Loss: 0.0010
+Epoch 74: Loss: 0.0010
+Epoch 75: Loss: 0.0010
+Epoch 76: Loss: 0.0010
+Epoch 77: Loss: 0.0010
+Epoch 78: Loss: 0.0010
+Epoch 79: Loss: 0.0010
+Epoch 80: Loss: 0.0010
+Epoch 81: Loss: 0.0010
+Epoch 82: Loss: 0.0010
+Epoch 83: Loss: 0.0010
+Epoch 84: Loss: 0.0010
+Epoch 85: Loss: 0.0010
+Epoch 86: Loss: 0.0010
+Epoch 87: Loss: 0.0009
+Epoch 88: Loss: 0.0009
+Epoch 89: Loss: 0.0009
+Epoch 90: Loss: 0.0009
+Epoch 91: Loss: 0.0009
+Epoch 92: Loss: 0.0009
+Epoch 93: Loss: 0.0009
+Epoch 94: Loss: 0.0009
+Epoch 95: Loss: 0.0009
+Epoch 96: Loss: 0.0009
+Epoch 97: Loss: 0.0009
+Epoch 98: Loss: 0.0009
+Epoch 99: Loss: 0.0009
+Epoch 100: Loss: 0.0009
+Epoch 101: Loss: 0.0009
+Epoch 102: Loss: 0.0009
+Epoch 103: Loss: 0.0009
+Epoch 104: Loss: 0.0009
+Epoch 105: Loss: 0.0009
+Epoch 106: Loss: 0.0009
+Epoch 107: Loss: 0.0009
+Epoch 108: Loss: 0.0009
+Epoch 109: Loss: 0.0009
+Epoch 110: Loss: 0.0009
+Epoch 111: Loss: 0.0009
+Epoch 112: Loss: 0.0009
+Epoch 113: Loss: 0.0009
+Epoch 114: Loss: 0.0009
+Epoch 115: Loss: 0.0009
+Epoch 116: Loss: 0.0009
+Epoch 117: Loss: 0.0009
+Epoch 118: Loss: 0.0008
+Epoch 119: Loss: 0.0008
+Epoch 120: Loss: 0.0008
+Epoch 121: Loss: 0.0008
+Epoch 122: Loss: 0.0008
+Epoch 123: Loss: 0.0008
+Epoch 124: Loss: 0.0008
+Epoch 125: Loss: 0.0008
+Epoch 126: Loss: 0.0008
+Epoch 127: Loss: 0.0008
+Epoch 128: Loss: 0.0008
+Epoch 129: Loss: 0.0008
+Epoch 130: Loss: 0.0008
+Epoch 131: Loss: 0.0008
+Epoch 132: Loss: 0.0008
+Epoch 133: Loss: 0.0008
+Epoch 134: Loss: 0.0008
+Epoch 135: Loss: 0.0008
+Epoch 136: Loss: 0.0008
+Epoch 137: Loss: 0.0008
+Epoch 138: Loss: 0.0008
+Epoch 139: Loss: 0.0008
+Epoch 140: Loss: 0.0008
+Epoch 141: Loss: 0.0008
+Epoch 142: Loss: 0.0008
+Epoch 143: Loss: 0.0008
+Epoch 144: Loss: 0.0008
+Epoch 145: Loss: 0.0008
+Epoch 146: Loss: 0.0008
+Epoch 147: Loss: 0.0008
+Epoch 148: Loss: 0.0008
+Epoch 149: Loss: 0.0008
+Epoch 150: Loss: 0.0008
+Epoch 151: Loss: 0.0008
+Epoch 152: Loss: 0.0008
+Epoch 153: Loss: 0.0008
+Epoch 154: Loss: 0.0007
+Epoch 155: Loss: 0.0007
+Epoch 156: Loss: 0.0007
+Epoch 157: Loss: 0.0007
+Epoch 158: Loss: 0.0007
+Epoch 159: Loss: 0.0007
+Epoch 160: Loss: 0.0007
+Epoch 161: Loss: 0.0007
+Epoch 162: Loss: 0.0007
+Epoch 163: Loss: 0.0007
+Epoch 164: Loss: 0.0007
+Epoch 165: Loss: 0.0007
+Epoch 166: Loss: 0.0007
+Epoch 167: Loss: 0.0007
+Epoch 168: Loss: 0.0007
+Epoch 169: Loss: 0.0007
+Epoch 170: Loss: 0.0007
+Epoch 171: Loss: 0.0007
+Epoch 172: Loss: 0.0007
+Epoch 173: Loss: 0.0007
+Epoch 174: Loss: 0.0007
+Epoch 175: Loss: 0.0007
+Epoch 176: Loss: 0.0007
+Epoch 177: Loss: 0.0007
+Epoch 178: Loss: 0.0007
+Epoch 179: Loss: 0.0007
+Epoch 180: Loss: 0.0007
+Epoch 181: Loss: 0.0007
+Epoch 182: Loss: 0.0007
+Epoch 183: Loss: 0.0007
+Epoch 184: Loss: 0.0007
+Epoch 185: Loss: 0.0007
+Epoch 186: Loss: 0.0007
+Epoch 187: Loss: 0.0007
+Epoch 188: Loss: 0.0007
+Epoch 189: Loss: 0.0007
+Epoch 190: Loss: 0.0007
+Epoch 191: Loss: 0.0007
+Epoch 192: Loss: 0.0007
+Epoch 193: Loss: 0.0007
+Epoch 194: Loss: 0.0007
+Epoch 195: Loss: 0.0006
+Epoch 196: Loss: 0.0006
+Epoch 197: Loss: 0.0006
+Epoch 198: Loss: 0.0006
+Epoch 199: Loss: 0.0006
+Epoch 200: Loss: 0.0006
+Epoch 201: Loss: 0.0006
+Epoch 202: Loss: 0.0006
+Epoch 203: Loss: 0.0006
+Epoch 204: Loss: 0.0006
+Epoch 205: Loss: 0.0006
+Epoch 206: Loss: 0.0006
+Epoch 207: Loss: 0.0006
+Epoch 208: Loss: 0.0006
+Epoch 209: Loss: 0.0006
+Epoch 210: Loss: 0.0006
+Epoch 211: Loss: 0.0006
+Epoch 212: Loss: 0.0006
+Epoch 213: Loss: 0.0006
+Epoch 214: Loss: 0.0006
+Epoch 215: Loss: 0.0006
+Epoch 216: Loss: 0.0006
+Epoch 217: Loss: 0.0006
+Epoch 218: Loss: 0.0006
+Epoch 219: Loss: 0.0006
+Epoch 220: Loss: 0.0006
+Epoch 221: Loss: 0.0006
+Epoch 222: Loss: 0.0006
+Epoch 223: Loss: 0.0006
+Epoch 224: Loss: 0.0006
+Epoch 225: Loss: 0.0006
+Epoch 226: Loss: 0.0006
+Epoch 227: Loss: 0.0006
+Epoch 228: Loss: 0.0006
+Epoch 229: Loss: 0.0006
+Epoch 230: Loss: 0.0006
+Epoch 231: Loss: 0.0006
+Epoch 232: Loss: 0.0006
+Epoch 233: Loss: 0.0006
+Epoch 234: Loss: 0.0006
+Epoch 235: Loss: 0.0006
+Epoch 236: Loss: 0.0006
+Epoch 237: Loss: 0.0006
+Epoch 238: Loss: 0.0006
+Epoch 239: Loss: 0.0006
+Epoch 240: Loss: 0.0006
+Epoch 241: Loss: 0.0006
+Epoch 242: Loss: 0.0006
+Epoch 243: Loss: 0.0006
+Epoch 244: Loss: 0.0005
+Epoch 245: Loss: 0.0005
+Epoch 246: Loss: 0.0005
+Epoch 247: Loss: 0.0005
+Epoch 248: Loss: 0.0005
+Epoch 249: Loss: 0.0005
+Epoch 250: Loss: 0.0005
+Epoch 251: Loss: 0.0005
+Epoch 252: Loss: 0.0005
+Epoch 253: Loss: 0.0005
+Epoch 254: Loss: 0.0005
+Epoch 255: Loss: 0.0005
+Epoch 256: Loss: 0.0005
+Epoch 257: Loss: 0.0005
+Epoch 258: Loss: 0.0005
+Epoch 259: Loss: 0.0005
+Epoch 260: Loss: 0.0005
+Epoch 261: Loss: 0.0005
+Epoch 262: Loss: 0.0005
+Epoch 263: Loss: 0.0005
+Epoch 264: Loss: 0.0005
+Epoch 265: Loss: 0.0005
+Epoch 266: Loss: 0.0005
+Epoch 267: Loss: 0.0005
+Epoch 268: Loss: 0.0005
+Epoch 269: Loss: 0.0005
+Epoch 270: Loss: 0.0005
+Epoch 271: Loss: 0.0005
+Epoch 272: Loss: 0.0005
+Epoch 273: Loss: 0.0005
+Epoch 274: Loss: 0.0005
+Epoch 275: Loss: 0.0005
+Epoch 276: Loss: 0.0005
+Epoch 277: Loss: 0.0005
+Epoch 278: Loss: 0.0005
+Epoch 279: Loss: 0.0005
+Epoch 280: Loss: 0.0005
+Epoch 281: Loss: 0.0005
+Epoch 282: Loss: 0.0005
+Epoch 283: Loss: 0.0005
+Epoch 284: Loss: 0.0005
+Epoch 285: Loss: 0.0005
+Epoch 286: Loss: 0.0005
+Epoch 287: Loss: 0.0005
+Epoch 288: Loss: 0.0005
+Epoch 289: Loss: 0.0005
+Epoch 290: Loss: 0.0005
+Epoch 291: Loss: 0.0005
+Epoch 292: Loss: 0.0005
+Epoch 293: Loss: 0.0005
+Epoch 294: Loss: 0.0005
+Epoch 295: Loss: 0.0005
+Epoch 296: Loss: 0.0005
+Epoch 297: Loss: 0.0005
+Epoch 298: Loss: 0.0005
+Epoch 299: Loss: 0.0005
+Epoch 300: Loss: 0.0005
+Epoch 301: Loss: 0.0005
+Epoch 302: Loss: 0.0005
+Epoch 303: Loss: 0.0005
+Epoch 304: Loss: 0.0005
+Epoch 305: Loss: 0.0004
+Epoch 306: Loss: 0.0004
+Epoch 307: Loss: 0.0004
+Epoch 308: Loss: 0.0004
+Epoch 309: Loss: 0.0004
+Epoch 310: Loss: 0.0004
+Epoch 311: Loss: 0.0004
+Epoch 312: Loss: 0.0004
+Epoch 313: Loss: 0.0004
+Epoch 314: Loss: 0.0004
+Epoch 315: Loss: 0.0004
+Epoch 316: Loss: 0.0004
+Epoch 317: Loss: 0.0004
+Epoch 318: Loss: 0.0004
+Epoch 319: Loss: 0.0004
+Epoch 320: Loss: 0.0004
+Epoch 321: Loss: 0.0004
+Epoch 322: Loss: 0.0004
+Epoch 323: Loss: 0.0004
+Epoch 324: Loss: 0.0004
+Epoch 325: Loss: 0.0004
+Epoch 326: Loss: 0.0004
+Epoch 327: Loss: 0.0004
+Epoch 328: Loss: 0.0004
+Epoch 329: Loss: 0.0004
+Epoch 330: Loss: 0.0004
+Epoch 331: Loss: 0.0004
+Epoch 332: Loss: 0.0004
+Epoch 333: Loss: 0.0004
+Epoch 334: Loss: 0.0004
+Epoch 335: Loss: 0.0004
+Epoch 336: Loss: 0.0004
+Epoch 337: Loss: 0.0004
+Epoch 338: Loss: 0.0004
+Epoch 339: Loss: 0.0004
+Epoch 340: Loss: 0.0004
+Size of preds and targets:  1206 1206
+Size of Training Data:  11079
+Number of Epochs:  340
+Mean Percentage Difference: -1.93%
+
+Predictions : Actual : Percentage Difference
+[[ 1.03821661  1.03842163 -0.01974344]
+ [ 1.03824157  1.03777504  0.04495533]
+ [ 1.03805593  1.03777504  0.0270667 ]
+ ...
+ [ 1.08476976  1.13973105 -4.82230359]
+ [ 1.08478318  1.13986087 -4.83196587]
+ [ 1.08482411  1.13960111 -4.80668221]]
