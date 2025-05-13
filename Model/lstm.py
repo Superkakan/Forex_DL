@@ -7,7 +7,6 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, a
 import sys
 
 from presentation.graph import graphing 
-=======
 
 #def build_lstm_model(input_shape):
 #    model = Sequential([
