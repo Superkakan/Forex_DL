@@ -5,7 +5,10 @@ from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, accuracy_score
 import sys
+
 from presentation.graph import graphing 
+=======
+
 #def build_lstm_model(input_shape):
 #    model = Sequential([
 #        layers.LSTM(64, return_sequences=True, input_shape=input_shape),
@@ -93,7 +96,9 @@ def create_sequences(data, seq_length = 32):
     return np.array(X), np.array(y)
 
 
-def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.001, write_to_file = False):
+
+
+def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
     hidden_dim = 10
     input_dim = 1
     seq_len = 25
