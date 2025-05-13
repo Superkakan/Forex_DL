@@ -5,10 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, accuracy_score
 import sys
-
 from presentation.graph import graphing 
-=======
-
 #def build_lstm_model(input_shape):
 #    model = Sequential([
 #        layers.LSTM(64, return_sequences=True, input_shape=input_shape),
@@ -41,11 +38,10 @@ class LSTMCell:
     def __init__(self, input_dim, hidden_dim):
         self.input_dim = input_dim
         self.hidden_dim = hidden_dim
-        limit = np.sqrt(6 / (input_dim + hidden_dim))
-        self.Wf = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
-        self.Wi = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
-        self.Wo = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
-        self.Wc = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
+        self.Wf = np.random.randn(hidden_dim,input_dim + hidden_dim) * 0.1
+        self.Wi = np.random.randn(hidden_dim,input_dim + hidden_dim) * 0.1
+        self.Wo = np.random.randn(hidden_dim,input_dim + hidden_dim) * 0.1
+        self.Wc = np.random.randn(hidden_dim,input_dim + hidden_dim) * 0.1
 
         self.bf = np.zeros((hidden_dim, 1))
         self.bi = np.zeros((hidden_dim, 1))
@@ -59,7 +55,7 @@ class LSTMCell:
         forget_gate = sigmoid(np.dot(self.Wf, concat) + self.bf) #Weight Forward, 
         input_gate = sigmoid(np.dot(self.Wi, concat) + self.bi)
         output_gate = sigmoid(np.dot(self.Wo, concat) + self.bo)
-        candidate_cell_gate = tanh(np.dot(self.Wc, concat) + self.bc)
+        candidate_cell_gate = sigmoid(np.dot(self.Wc, concat) + self.bc)
         new_cell_state = (forget_gate * c_prev) + (input_gate * candidate_cell_gate)
         hidden_state = output_gate * tanh(new_cell_state)
 
@@ -96,9 +92,7 @@ def create_sequences(data, seq_length = 32):
     return np.array(X), np.array(y)
 
 
-
-
-def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
+def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.001, write_to_file = False):
     hidden_dim = 10
     input_dim = 1
     seq_len = 25
@@ -175,7 +169,7 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     print(np.c_[preds,targets, diff_percentage])
 
     graphing(diff_percentage, preds, targets)
-
+    
     if (write_to_file == True):
         sys.stdout.close()
 
