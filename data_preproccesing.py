@@ -10,10 +10,10 @@ def split_data(data, ratio = 0.7):
     return train, test
 
 def get_data(ratio = 0.7):
-    if (not os.path.isfile("yfinance_data/eurusd_yf.csv")): #check if data exists, if not then download it
-        yfinance_fetcher.download_data()
+    #if (not os.path.isfile("yfinance_data/eurusd_yf.csv")): #check if data exists, if not then download it
+    #    yfinance_fetcher.download_data()
 
-    dataframe = pd.read_csv("yfinance_data/eurusd_yf.csv")
+    dataframe = pd.read_csv("Forex_DL/yfinance_data/eurusd_yf.csv")
 
     #dataframe = dataframe.round(decimals=5)
     dataframe = dataframe.drop(index=0) #Ticker

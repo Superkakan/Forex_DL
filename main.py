@@ -1,6 +1,6 @@
 import pandas as pd
 import data_preproccesing
-from model import lstm, magnn
+from model import lstm as lstm
 from sklearn.preprocessing import MinMaxScaler
 
 

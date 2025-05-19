@@ -95,37 +95,10 @@ def create_sequences(data, seq_length = 32):
     return np.array(X), np.array(y)
 
 
-def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
-    lstm = model
-    hidden_dim = lstm.hidden_dim
-    predictions = []
-
-    h = np.zeros((hidden_dim, 1))
-    c = np.zeros((hidden_dim, 1))
-
-    current_seq = initial_seq.copy()
-
-    for _ in range(steps):
-        for t in range(len(current_seq)):
-            h, c = lstm.forward(current_seq[t], h, c)
-
-        y_pred = np.dot(W_out, h) + b_out
-        predictions.append(y_pred.item())
-
-        # Update the sequence with the new prediction (scaled)
-        new_input = np.array(y_pred).reshape(1, 1, 1)
-        current_seq = np.concatenate([current_seq[1:], new_input], axis=0)
-
-    # Inverse transform the predictions
-    predictions = scaler.inverse_transform(np.array(predictions).reshape(-1, 1))
-    return predictions
-
-
-
 def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
     hidden_dim = 10
     input_dim = 1
-    seq_len = 25
+    seq_len = 24 #24h
     
     if (write_to_file == True):
         sys.stdout = open("results.txt", "a")
@@ -162,7 +135,7 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     #validation part
     preds = []
     targets = []
-    for i in range(len(X_val)):
+    for i in range(seq_len):
         x_seq = X_val[i]
         h = np.zeros((hidden_dim, 1))
         c = np.zeros((hidden_dim, 1))
@@ -199,20 +172,6 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     print(np.c_[preds,targets, diff_percentage])
 
     graphing(diff_percentage, preds, targets)
-
-    # --- Predict next 24 steps using the last available validation sequence ---
-    last_sequence = X_val[0]  # shape: (seq_len, 1, 1)
-    future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=6)
-    f_diff_percentage = []
-    for i in range(future_preds.size):
-        index = i
-        f_diff = 100*(future_preds[i] - targets[index])/(targets[index]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
-        f_diff_percentage.append(f_diff)
-
-    print("\nFuture Predictions for the Next 24 Steps:")
-    print(future_preds.flatten())
-
-    graphing(f_diff_percentage, future_preds, targets[:6])
 
     if (write_to_file == True):
         sys.stdout.close()
