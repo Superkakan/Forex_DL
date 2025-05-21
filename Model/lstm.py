@@ -90,8 +90,12 @@ def generate_testdata(seq_len = 50, total_points = 1000): #sine wave data
 def create_sequences(data, seq_length = 32):
     X,y = [],[]
     for i in range(len(data) - seq_length):
-        X.append(data[i:i+seq_length].reshape(-1,1,1))
-        y.append(data[i+seq_length])
+        sequence = data[i:i + seq_length]
+        label = data[i + seq_length][0]
+        X.append(sequence.reshape(seq_length, 2, 1))
+        y.append(label)
+        #X.append(data[i:i+seq_length].reshape(-1,2,1))
+        #y.append(data[i+seq_length])
     return np.array(X), np.array(y)
 
 
@@ -103,28 +107,46 @@ def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
     h = np.zeros((hidden_dim, 1))
     c = np.zeros((hidden_dim, 1))
 
-    current_seq = initial_seq.copy()
+    current_seq = initial_seq.copy()  # (seq_len, 1, num_features)
+    num_features = current_seq.shape[2]
 
     for _ in range(steps):
         for t in range(len(current_seq)):
             h, c = lstm.forward(current_seq[t], h, c)
 
-        y_pred = np.dot(W_out, h) + b_out
-        predictions.append(y_pred.item())
+        y_pred = np.dot(W_out, h) + b_out  # Shape: (1, 1)
+        pred_val = y_pred.item()
+        predictions.append(pred_val)
 
-        # Update the sequence with the new prediction (scaled)
-        new_input = np.array(y_pred).reshape(1, 1, 1)
+        # Extract the last timestep (shape: (1, num_features))
+        last_step = current_seq[-1]  # shape is (1, num_features)
+
+        # Overwrite the predicted value (assuming first feature is the one being predicted)
+        new_step = last_step.copy()
+        new_step[0, 0] = pred_val #y_pred
+
+
+        # Reshape to (1, 1, num_features) for concatenation
+        new_input = new_step.reshape(1, 2, 1)
+
+        # Append new input and remove oldest
         current_seq = np.concatenate([current_seq[1:], new_input], axis=0)
 
     # Inverse transform the predictions
-    predictions = scaler.inverse_transform(np.array(predictions).reshape(-1, 1))
-    return predictions
+    #predictions = scaler.inverse_transform(np.array(predictions).reshape(-1, 2))
+    dummy_second_feature = np.tile(current_seq[-1][1, 0], (steps, 1))  # keep last second feature
+    combined_preds = np.hstack((np.array(predictions).reshape(-1, 1), dummy_second_feature))
+
+    predictions_inverse = scaler.inverse_transform(combined_preds)
+    
+    return predictions_inverse
+
 
 
 
 def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
     hidden_dim = 10
-    input_dim = 1
+    input_dim = 2
     seq_len = 25
     
     if (write_to_file == True):
@@ -149,9 +171,10 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
                 h,c = lstm.forward(x_seq[t],h,c)
             
             y_pred = np.dot(W_out, h) + b_out
-            error = y_pred - y[i]
-            loss = error ** 2
-            loss_epoch += loss.item()
+            target = np.array([[y[i]]])
+            error = y_pred - target #y[i]
+            loss = (error ** 2).sum()
+            loss_epoch += loss
 
             dW_out = 2 * error * h.T
             db_out = 2 * error
@@ -172,16 +195,16 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
         preds.append(y_pred.item())
         targets.append(y_val[i])
     
-    preds = scaler.inverse_transform(np.array(preds).reshape(-1,1))
-    targets = scaler.inverse_transform(np.array(targets).reshape(-1,1))
+    preds = scaler.inverse_transform(np.array(preds).reshape(-1,2))
+    targets = scaler.inverse_transform(np.array(targets).reshape(-1,2))
 
     mse = mean_squared_error(targets, preds)
     mae = mean_absolute_error(targets,preds)
     r2 = r2_score(targets, preds)
     diff_percentage = []
     print("Size of preds and targets: ", preds.size, targets.size)
-    for i in range(preds.size):
-        diff = 100*(preds[i] - targets[i])/(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+    for i in range(preds.size//2):
+        diff = 100*(preds[i,0] - targets[i,0])/(targets[i,0]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
         diff_percentage.append(diff)
 
 
@@ -196,23 +219,24 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     print("")
 
     print("Predictions : Actual : Percentage Difference")
-    print(np.c_[preds,targets, diff_percentage])
+    print(np.c_[preds[:,0],targets[:,0], diff_percentage])
 
-    graphing(diff_percentage, preds, targets)
+    graphing(diff_percentage, preds[:,0], targets[:,0])
 
     # --- Predict next 24 steps using the last available validation sequence ---
     last_sequence = X_val[0]  # shape: (seq_len, 1, 1)
-    future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=6)
+    future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=24)
     f_diff_percentage = []
-    for i in range(future_preds.size):
+    for i in range(future_preds.size//2):
         index = i
-        f_diff = 100*(future_preds[i] - targets[index])/(targets[index]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+        f_diff = 100*(future_preds[i,0] - targets[index,0])/(targets[index,0]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
         f_diff_percentage.append(f_diff)
 
     print("\nFuture Predictions for the Next 24 Steps:")
-    print(future_preds.flatten())
-
-    graphing(f_diff_percentage, future_preds, targets[:6])
+    print(future_preds[:,0].flatten())
+    print("Percentage difference:", np.c_[f_diff_percentage])
+    print (f"Mean Percentage Difference: {np.mean(f_diff_percentage):.2f}%")
+    graphing(f_diff_percentage, future_preds[:,0], targets[:12,0])
 
     if (write_to_file == True):
         sys.stdout.close()
