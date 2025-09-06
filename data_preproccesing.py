@@ -13,10 +13,12 @@ def split_data(data, ratio=0.7):
     return train, test
 
 def get_data(ratio=0.7):
-    df = pd.read_csv("Forex_DL/yfinance_data/eurusd_yf.csv", skiprows=[1,2])  # skip the Ticker row
-    df = df.rename(columns={"Price": "Datetime"})  # Rename 'Price' to 'Datetime'
+    df = pd.read_csv("Forex_DL/yfinance_data/eurusd_1d.csv")  # skip the Ticker row
+    df = df.rename(columns={"Date": "Datetime"})  # Rename 'Price' to 'Datetime'
+    df = df.rename(columns={"Close/Last" : "Close"})
     df["Datetime"] = pd.to_datetime(df["Datetime"])
     df["Date"] = df["Datetime"].dt.date  # extract date part for sentiment merge
+    df = df.drop(columns="Volume")
 
     sentiment = news_data_preproceessing()
     sentiment["Date"] = pd.to_datetime(sentiment["Date"]).dt.date
@@ -50,18 +52,18 @@ def news_data_preproceessing():
 
     # Sentiment maps
     sentiment_map_eur = {
-        "Very Negative": -2,
-        "Negative": -1,
-        "Neutral": 0,
-        "Positive": 1,
-        "Very Positive": 2
+        "Very Negative": -0.02,
+        "Negative": -0.01,
+        "Neutral": 0.00,
+        "Positive": 0.01,
+        "Very Positive": 0.02
     }
     sentiment_map_usd = {
-        "Very Negative": 2,
-        "Negative": 1,
-        "Neutral": 0,
-        "Positive": -1,
-        "Very Positive": -2
+        "Very Negative": 0.02,
+        "Negative": 0.01,
+        "Neutral": 0.00,
+        "Positive": -0.01,
+        "Very Positive": -0.02
     }
 
     # Clean and map ECB (EUR-positive)
@@ -88,7 +90,7 @@ def news_data_preproceessing():
     sentiment_all.fillna(0, inplace=True)
     sentiment_all["TotalSentiment"] = sentiment_all["SentimentScore_ECB"] + sentiment_all["SentimentScore_Fed"]
     
-    # Optional: Sort by date
+    # Sort by date
     sentiment_all.sort_values("Date", inplace=True)
     sentiment_all = sentiment_all.drop(columns=["SentimentScore_ECB", "SentimentScore_Fed"])
     print(sentiment_all.head(10))

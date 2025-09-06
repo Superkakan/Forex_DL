@@ -145,16 +145,16 @@ def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
 
 
 def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
-    hidden_dim = 10
+    hidden_dim = 128
     input_dim = 2
-    seq_len = 25
+    seq_len = 32
     
     if (write_to_file == True):
         sys.stdout = open("results.txt", "a")
         print("")
 
     lstm = LSTMCell(input_dim, hidden_dim)
-    W_out = np.random.randn(1, hidden_dim) * 0.1 #Output layer weights
+    W_out = np.random.randn(1, hidden_dim)# * 0.1 #Output layer weights
     b_out = np.zeros((1,1))
 
     X,y = create_sequences(train_data, seq_len) # Training data
@@ -195,18 +195,58 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
         preds.append(y_pred.item())
         targets.append(y_val[i])
     
-    preds = scaler.inverse_transform(np.array(preds).reshape(-1,2))
-    targets = scaler.inverse_transform(np.array(targets).reshape(-1,2))
+    #preds = scaler.inverse_transform(np.array(preds).reshape(-1,2))
+    #targets = scaler.inverse_transform(np.array(targets).reshape(-1,2))
 
     mse = mean_squared_error(targets, preds)
     mae = mean_absolute_error(targets,preds)
     r2 = r2_score(targets, preds)
     diff_percentage = []
-    print("Size of preds and targets: ", preds.size, targets.size)
-    for i in range(preds.size//2):
-        diff = 100*(preds[i,0] - targets[i,0])/(targets[i,0]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+    print("Size of preds and targets: ", len(preds), len(targets))#targets.size
+    for i in range(len(preds)): #preds.size//2
+        diff = 100*(preds[i] - targets[i])/(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
         diff_percentage.append(diff)
+    
+    direction_val = []
+    direction_tar = []
+    up = 1
+    neutral = 0
+    down = -1
+    for i in range(len(preds)):
+        #prediction var
+        if i > 0: # these basically convert the prediction into an classification instead of regression
+            if (preds[i] - preds[i-1]) > 0.0010: # 10 pips
+                direction_val.append(up)
+            elif (preds[i] - preds[i-1]) < -0.0010: # downward
+                direction_val.append(down)
+            else: #neutral
+                direction_val.append(neutral)
+            
+            #targets
+            if (targets[i] - targets[i-1]) > 0.0010: # 10 pips
+                direction_tar.append(up)
+            elif (targets[i] - targets[i-1]) < -0.0010: # downward
+                direction_tar.append(down)
+            else: #neutral
+                direction_tar.append(neutral)
 
+            
+            if preds[i] > preds[i-1]:
+                pass #up
+            if preds [i] > targets[i]:
+                pass # preds bigger than target
+    correct_dir_pred = []
+    correct_dir_pred_amount = 0
+    #compare the results from the classification
+    for i in range(len(direction_tar)):
+        if direction_tar[i] == direction_val[i]:
+            correct_dir_pred.append(i) # would be nice to store the prediction with the index
+            correct_dir_pred_amount += 1
+
+
+
+## if lstm predict higher price for the next timestamp
+## and if the news are positive, then buy etc
 
     #Perhaps move results to separate visualization function
     #Add percentage error function with minus
@@ -218,25 +258,25 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     print(f"Mean Percentage Difference: {np.mean(diff_percentage):.2f}%")
     print("")
 
-    print("Predictions : Actual : Percentage Difference")
-    print(np.c_[preds[:,0],targets[:,0], diff_percentage])
+    #print("Predictions : Actual : Percentage Difference")
+    #print(np.c_[preds],np.c_[targets], np.c_[diff_percentage]) # np.c_[] preds[:,0]
 
-    graphing(diff_percentage, preds[:,0], targets[:,0])
+    graphing(diff_percentage, preds, targets)
 
     # --- Predict next 24 steps using the last available validation sequence ---
     last_sequence = X_val[0]  # shape: (seq_len, 1, 1)
     future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=24)
     f_diff_percentage = []
-    for i in range(future_preds.size//2):
+    for i in range(len(future_preds)):
         index = i
-        f_diff = 100*(future_preds[i,0] - targets[index,0])/(targets[index,0]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+        f_diff = 100*(future_preds[i] - targets[i])/(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
         f_diff_percentage.append(f_diff)
 
     print("\nFuture Predictions for the Next 24 Steps:")
     print(future_preds[:,0].flatten())
     print("Percentage difference:", np.c_[f_diff_percentage])
     print (f"Mean Percentage Difference: {np.mean(f_diff_percentage):.2f}%")
-    graphing(f_diff_percentage, future_preds[:,0], targets[:12,0])
+    graphing(f_diff_percentage, future_preds, targets) #:24,0
 
     if (write_to_file == True):
         sys.stdout.close()
