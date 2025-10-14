@@ -43,7 +43,7 @@ def get_data(ratio=0.7):
 def news_data_preproceessing():
     # Load datasets
     ecb_data = pd.read_csv("Forex_DL/news_data/ecb_classified.csv")
-    fed_article_data = pd.read_csv("Forex_DL/news_data/fed_articles_classified.csv")
+    fed_article_data = pd.read_csv("Forex_DL/news_data/fed_articles _classified.csv")
     fed_speeches_data = pd.read_csv("Forex_DL/news_data/fed_speeches_classified.csv")
 
     # Remove unnecessary columns
