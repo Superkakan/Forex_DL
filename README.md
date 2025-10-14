@@ -1,6 +1,6 @@
 # Made by Felix Stockinger and Lukas Ydkvist
 
-A DL project to predict currency prices using a LSTM and semantic data. All the graphs that doesnt have the timeframe in the name, have a 1m granuality.
+A DL project to predict currency prices using a LSTM and semantic data. 
  
 
 **1m Data downloaded from:** <br />
@@ -20,9 +20,12 @@ pandas
 sklearn
 
 Although the model correctly predicts an upgoing trend in one of the predict the future graphs, it doesnt really work, because its a LSTM. But who knows what will happen with more work?<br /><br />
-Anyway, next step can be to include intraday prices of currencies or economic indicators, for a more accurate prediction.
-The impact of the semantic data is minimal, could research on how to make this weight in more.
+Anyway, next step can be to include intraday prices of currencies or economic indicators, for a more accurate prediction.<br />
+The impact of the semantic data is minimal, could research on how to make this weight in more.<br />
 The tuning/testing of hyperparameter can also be automated
+
+
+All the saved graphs that doesnt have the timeframe in the name, have a granuality of 1h.
 
 ## Some graphs:
 
