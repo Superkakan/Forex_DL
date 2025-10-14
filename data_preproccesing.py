@@ -32,3 +32,6 @@ def get_data(ratio = 0.7):
     print("Size of train and test: ", train.size, test.size)
     return train, test, scaler
     
+
+
+    #Prediction Target / Intervals
