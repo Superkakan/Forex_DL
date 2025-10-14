@@ -12,7 +12,7 @@ def download_data(currency = "EURUSD=X", interval = "1d"): #EURUSD=X start = "20
     
     if (not data.empty):
         print("Saving to csv:")
-        data.to_csv("yfinance_data/eurusd_yf_1d.csv")
+        data.to_csv("data/yfinance_data/eurusd_yf_1d.csv")
     else:
         print("Data could not be downloaded")
 

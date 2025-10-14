@@ -13,7 +13,7 @@ def split_data(data, ratio=0.7):
     return train, test
 
 def get_data(ratio=0.7):
-    df = pd.read_csv("Forex_DL/yfinance_data/eurusd_1d.csv")  # skip the Ticker row
+    df = pd.read_csv("data/yfinance_data/eurusd_1d.csv")  # skip the Ticker row
     df = df.rename(columns={"Date": "Datetime"})  # Rename 'Price' to 'Datetime'
     df = df.rename(columns={"Close/Last" : "Close"})
     df["Datetime"] = pd.to_datetime(df["Datetime"])
@@ -42,9 +42,9 @@ def get_data(ratio=0.7):
 
 def news_data_preproceessing():
     # Load datasets
-    ecb_data = pd.read_csv("Forex_DL/news_data/ecb_classified.csv")
-    fed_article_data = pd.read_csv("Forex_DL/news_data/fed_articles _classified.csv")
-    fed_speeches_data = pd.read_csv("Forex_DL/news_data/fed_speeches_classified.csv")
+    ecb_data = pd.read_csv("data/news_data/ecb_classified.csv")
+    fed_article_data = pd.read_csv("data/news_data/fed_articles_classified.csv")
+    fed_speeches_data = pd.read_csv("data/news_data/fed_speeches_classified.csv")
 
     # Remove unnecessary columns
     for df in [ecb_data, fed_article_data, fed_speeches_data]:

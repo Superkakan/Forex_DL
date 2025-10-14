@@ -3,20 +3,10 @@
 #from keras import layers, Sequential
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, accuracy_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import sys
 
 from presentation.graph import graphing 
-
-#def build_lstm_model(input_shape):
-#    model = Sequential([
-#        layers.LSTM(64, return_sequences=True, input_shape=input_shape),
-#        layers.Dropout(0.2),
-#        layers.LSTM(32),
-#        layers.Dense(1)
-#    ])
-#    model.compile(optimizer="adam", loss="mse")
-#    return model
 
 def sigmoid(x):
     result = (1 / (1 + np.exp(-x)))
@@ -141,8 +131,45 @@ def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
     
     return predictions_inverse
 
+#convert to direction
+def prediction_direction(preds,targets,treshold = 0.0010):
+    direction_val = []
+    direction_tar = []
+    up = 1
+    neutral = 0
+    down = -1
+    for i in range(len(preds)):
+        #prediction var
+        if i > 0: # these basically convert the prediction into an classification instead of regression
+            if (preds[i] - preds[i-1]) > treshold: 
+                direction_val.append(up)
+            elif (preds[i] - preds[i-1]) < -treshold: # downward
+                direction_val.append(down)
+            else: #neutral
+                direction_val.append(neutral)
+            
+            #targets
+            if (targets[i] - targets[i-1]) > treshold: 
+                direction_tar.append(up)
+            elif (targets[i] - targets[i-1]) < -treshold: # downward
+                direction_tar.append(down)
+            else: #neutral
+                direction_tar.append(neutral)
 
-
+            
+            if preds[i] > preds[i-1]:
+                pass #up
+            if preds [i] > targets[i]:
+                pass # preds bigger than target
+    correct_dir_pred = []
+    correct_dir_pred_amount = 0
+    #compare the results from the classification
+    for i in range(len(direction_tar)):
+        if direction_tar[i] == direction_val[i]:
+            correct_dir_pred.append(i) # would be nice to store the prediction with the index
+            correct_dir_pred_amount += 1
+## if lstm predict higher price for the next timestamp
+## and if the news are positive, then buy etc
 
 def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
     hidden_dim = 128
@@ -204,49 +231,12 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     diff_percentage = []
     print("Size of preds and targets: ", len(preds), len(targets))#targets.size
     for i in range(len(preds)): #preds.size//2
-        diff = 100*(preds[i] - targets[i])/(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+        diff = 100*(preds[i] - targets[i])/(targets[i]) 
         diff_percentage.append(diff)
     
-    direction_val = []
-    direction_tar = []
-    up = 1
-    neutral = 0
-    down = -1
-    for i in range(len(preds)):
-        #prediction var
-        if i > 0: # these basically convert the prediction into an classification instead of regression
-            if (preds[i] - preds[i-1]) > 0.0010: # 10 pips
-                direction_val.append(up)
-            elif (preds[i] - preds[i-1]) < -0.0010: # downward
-                direction_val.append(down)
-            else: #neutral
-                direction_val.append(neutral)
-            
-            #targets
-            if (targets[i] - targets[i-1]) > 0.0010: # 10 pips
-                direction_tar.append(up)
-            elif (targets[i] - targets[i-1]) < -0.0010: # downward
-                direction_tar.append(down)
-            else: #neutral
-                direction_tar.append(neutral)
-
-            
-            if preds[i] > preds[i-1]:
-                pass #up
-            if preds [i] > targets[i]:
-                pass # preds bigger than target
-    correct_dir_pred = []
-    correct_dir_pred_amount = 0
-    #compare the results from the classification
-    for i in range(len(direction_tar)):
-        if direction_tar[i] == direction_val[i]:
-            correct_dir_pred.append(i) # would be nice to store the prediction with the index
-            correct_dir_pred_amount += 1
-
-
-
-## if lstm predict higher price for the next timestamp
-## and if the news are positive, then buy etc
+    convert_to_trinary = False
+    if (convert_to_trinary == True):
+        prediction_direction(preds,targets)
 
     #Perhaps move results to separate visualization function
     #Add percentage error function with minus
@@ -260,23 +250,22 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
 
     #print("Predictions : Actual : Percentage Difference")
     #print(np.c_[preds],np.c_[targets], np.c_[diff_percentage]) # np.c_[] preds[:,0]
-
     graphing(diff_percentage, preds, targets)
 
-    # --- Predict next 24 steps using the last available validation sequence ---
+    #Predict next 24 steps using the last available validation sequence ---
     last_sequence = X_val[0]  # shape: (seq_len, 1, 1)
     future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=24)
     f_diff_percentage = []
     for i in range(len(future_preds)):
         index = i
-        f_diff = 100*(future_preds[i] - targets[i])/(targets[i]) #100*abs(((abs(preds[i]) - abs(targets[i])) / (abs(preds[i])) - abs(targets[i])) / 2) # Absolute Percentage Difference
+        f_diff = 100*(future_preds[i] - targets[i])/(targets[i])
         f_diff_percentage.append(f_diff)
 
     print("\nFuture Predictions for the Next 24 Steps:")
     print(future_preds[:,0].flatten())
     print("Percentage difference:", np.c_[f_diff_percentage])
     print (f"Mean Percentage Difference: {np.mean(f_diff_percentage):.2f}%")
-    graphing(f_diff_percentage, future_preds, targets) #:24,0
+    graphing(f_diff_percentage, future_preds[:,0], targets)
 
     if (write_to_file == True):
         sys.stdout.close()
