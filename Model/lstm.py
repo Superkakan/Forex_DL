@@ -63,20 +63,6 @@ class LSTMCell:
                         xt)
         return hidden_state, new_cell_state
 
-
-def generate_testdata(seq_len = 50, total_points = 1000): #sine wave data
-    x = np.linspace(0,20 * np.pi, total_points)
-    data = np.sin(x)
-    sequences = []
-    labels = []
-    for i in range(len(data)- seq_len):
-        seq = data[i:i+seq_len].reshape(-1,1,1)
-        target = data[i+seq_len]
-        sequences.append(seq)
-        labels.append(target)
-    return np.array(sequences), np.array(labels)
-
-
 def create_sequences(data, seq_length = 32):
     X,y = [],[]
     for i in range(len(data) - seq_length):
@@ -84,10 +70,7 @@ def create_sequences(data, seq_length = 32):
         label = data[i + seq_length][0]
         X.append(sequence.reshape(seq_length, 2, 1))
         y.append(label)
-        #X.append(data[i:i+seq_length].reshape(-1,2,1))
-        #y.append(data[i+seq_length])
     return np.array(X), np.array(y)
-
 
 def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
     lstm = model
@@ -155,7 +138,6 @@ def prediction_direction(preds,targets,treshold = 0.0010):
                 direction_tar.append(down)
             else: #neutral
                 direction_tar.append(neutral)
-
             
             if preds[i] > preds[i-1]:
                 pass #up
@@ -168,8 +150,7 @@ def prediction_direction(preds,targets,treshold = 0.0010):
         if direction_tar[i] == direction_val[i]:
             correct_dir_pred.append(i) # would be nice to store the prediction with the index
             correct_dir_pred_amount += 1
-## if lstm predict higher price for the next timestamp
-## and if the news are positive, then buy etc
+
 
 def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
     hidden_dim = 128
@@ -221,9 +202,6 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
         y_pred = np.dot(W_out, h) + b_out
         preds.append(y_pred.item())
         targets.append(y_val[i])
-    
-    #preds = scaler.inverse_transform(np.array(preds).reshape(-1,2))
-    #targets = scaler.inverse_transform(np.array(targets).reshape(-1,2))
 
     mse = mean_squared_error(targets, preds)
     mae = mean_absolute_error(targets,preds)
@@ -234,12 +212,11 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
         diff = 100*(preds[i] - targets[i])/(targets[i]) 
         diff_percentage.append(diff)
     
+    # under construction
     convert_to_trinary = False
     if (convert_to_trinary == True):
         prediction_direction(preds,targets)
 
-    #Perhaps move results to separate visualization function
-    #Add percentage error function with minus
     #print(f"Validation MSE: {mse:.6f}")
     #print(f"Validation MAE: {mae:.6f}")
     #print(f"Validation R2: {r2:.4f}")
@@ -252,8 +229,8 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     #print(np.c_[preds],np.c_[targets], np.c_[diff_percentage]) # np.c_[] preds[:,0]
     graphing(diff_percentage, preds, targets)
 
-    #Predict next 24 steps using the last available validation sequence ---
-    last_sequence = X_val[0]  # shape: (seq_len, 1, 1)
+    #Predict next 24 steps using the last available validation sequence
+    last_sequence = X_val[0]
     future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=24)
     f_diff_percentage = []
     for i in range(len(future_preds)):
