@@ -63,12 +63,12 @@ class LSTMCell:
                         xt)
         return hidden_state, new_cell_state
 
-def create_sequences(data, seq_length = 32):
+def create_sequences(data, seq_length = 32, pred_steps = 1):
     X,y = [],[]
-    for i in range(len(data) - seq_length):
-        sequence = data[i:i + seq_length]
-        label = data[i + seq_length][0]
-        X.append(sequence.reshape(seq_length, 2, 1))
+    for i in range(len(data) - seq_length - pred_steps):
+        sequence = data[i:i + seq_length + pred_steps]
+        label = data[i + seq_length + pred_steps][0]
+        X.append(sequence.reshape(seq_length + pred_steps, 2, 1))
         y.append(label)
     return np.array(X), np.array(y)
 
@@ -104,13 +104,13 @@ def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
 
         # Append new input and remove oldest
         current_seq = np.concatenate([current_seq[1:], new_input], axis=0)
-
-    # Inverse transform the predictions
+  # Inverse transform the predictions
     #predictions = scaler.inverse_transform(np.array(predictions).reshape(-1, 2))
     dummy_second_feature = np.tile(current_seq[-1][1, 0], (steps, 1))  # keep last second feature
     combined_preds = np.hstack((np.array(predictions).reshape(-1, 1), dummy_second_feature))
 
     predictions_inverse = scaler.inverse_transform(combined_preds)
+  
     
     return predictions_inverse
 
@@ -152,10 +152,11 @@ def prediction_direction(preds,targets,treshold = 0.0010):
             correct_dir_pred_amount += 1
 
 
-def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
+def run_model(train_data, val_data, scaler, pred_step, epochs = 5, learning_rate = 0.01, write_to_file = False):
     hidden_dim = 128
     input_dim = 2
-    seq_len = 32
+    seq_len = pred_step + 32
+    #pred_step
     
     if (write_to_file == True):
         sys.stdout = open("results.txt", "a")
@@ -164,9 +165,9 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     lstm = LSTMCell(input_dim, hidden_dim)
     W_out = np.random.randn(1, hidden_dim)# * 0.1 #Output layer weights
     b_out = np.zeros((1,1))
-
-    X,y = create_sequences(train_data, seq_len) # Training data
-    X_val, y_val = create_sequences(val_data, seq_len)
+    X,y = create_sequences(train_data, seq_len, pred_step) # Training data
+    X_val, y_val = create_sequences(val_data, seq_len,pred_step)
+    
     for epoch in range(epochs):
         loss_epoch = 0
         for i in range(len(X)):
@@ -180,8 +181,9 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
             
             y_pred = np.dot(W_out, h) + b_out
             target = np.array([[y[i]]])
-            error = y_pred - target #y[i]
-            loss = (error ** 2).sum()
+            # L2 Loss
+            error = y_pred - target 
+            loss = (error ** 2).sum() 
             loss_epoch += loss
 
             dW_out = 2 * error * h.T
@@ -231,18 +233,26 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
 
     #Predict next 24 steps using the last available validation sequence
     last_sequence = X_val[0]
-    future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=24)
+    future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=24) # Denormalized in function
+
+
+    combined_targets = [[t, 0] for t in targets]
+    targets_inverse = scaler.inverse_transform(combined_targets)
+    targets_real = [row[0] for row in targets_inverse]
+
     f_diff_percentage = []
     for i in range(len(future_preds)):
         index = i
-        f_diff = 100*(future_preds[i] - targets[i])/(targets[i])
+        f_diff = 100*(future_preds[i] - targets_real[i])/(targets_real[i])
         f_diff_percentage.append(f_diff)
 
     print("\nFuture Predictions for the Next 24 Steps:")
     print(future_preds[:,0].flatten())
+    print("Target Values:")
+    print(targets_real[:-24])
     print("Percentage difference:", np.c_[f_diff_percentage])
     print (f"Mean Percentage Difference: {np.mean(f_diff_percentage):.2f}%")
-    graphing(f_diff_percentage, future_preds[:,0], targets)
+    graphing(f_diff_percentage, future_preds[:,0], targets_real)
 
     if (write_to_file == True):
         sys.stdout.close()
