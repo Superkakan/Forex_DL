@@ -19,7 +19,7 @@ def get_data(ratio=0.7):
     df["Datetime"] = pd.to_datetime(df["Datetime"])
     df["Date"] = df["Datetime"].dt.date  # extract date part for sentiment merge
     df = df.drop(columns="Volume")
-
+    df = df.sort_values(by="Date",)
     sentiment = news_data_preproceessing()
     sentiment["Date"] = pd.to_datetime(sentiment["Date"]).dt.date
 

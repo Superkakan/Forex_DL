@@ -1,7 +1,5 @@
 import yfinance as yf
 
-
-
 def download_data(currency = "EURUSD=X", interval = "1d"): #EURUSD=X start = "2018-05-07", end = "2025-05-01", 
     #test yfinance first
     data = yf.download(tickers = currency, interval = interval) # start=start, end=end,
