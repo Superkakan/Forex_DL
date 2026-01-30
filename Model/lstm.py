@@ -31,11 +31,12 @@ class LSTMCell:
         self.input_dim = input_dim
         self.hidden_dim = hidden_dim
         limit = np.sqrt(6 / (input_dim + hidden_dim))
+        #weight vectors
         self.Wf = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
         self.Wi = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
         self.Wo = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
         self.Wc = np.random.uniform(-limit, limit, (hidden_dim, input_dim + hidden_dim))
-
+        #bias vectors
         self.bf = np.zeros((hidden_dim, 1))
         self.bi = np.zeros((hidden_dim, 1))
         self.bo = np.zeros((hidden_dim, 1))
@@ -63,27 +64,33 @@ class LSTMCell:
                         xt)
         return hidden_state, new_cell_state
 
-def create_sequences(data, seq_length = 32):
+def create_sequences(data, seq_length = 32, pred_steps = 1):
     X,y = [],[]
-    for i in range(len(data) - seq_length):
+    for i in range(len(data) - seq_length - pred_steps):
         sequence = data[i:i + seq_length]
-        label = data[i + seq_length][0]
-        X.append(sequence.reshape(seq_length, 2, 1))
+        label = data[i + seq_length + pred_steps - 1,0]
+        X.append(sequence.reshape(seq_length, data.shape[1], 1)) #1 
         y.append(label)
+    #(sequence_length, num_features, 1)
+    
+    y = np.array(y)
+    print("Labels shape: ",y.shape)
     return np.array(X), np.array(y)
 
-def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
+
+def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24): # More of a helper function
     lstm = model
     hidden_dim = lstm.hidden_dim
     predictions = []
 
-    h = np.zeros((hidden_dim, 1))
-    c = np.zeros((hidden_dim, 1))
 
     current_seq = initial_seq.copy()  # (seq_len, 1, num_features)
-    num_features = current_seq.shape[2]
+    num_features = current_seq.shape[1]
 
     for _ in range(steps):
+        h = np.zeros((hidden_dim, 1)) # Shape of the array ofc
+        c = np.zeros((hidden_dim, 1))
+
         for t in range(len(current_seq)):
             h, c = lstm.forward(current_seq[t], h, c)
 
@@ -100,62 +107,20 @@ def predict_future(model, W_out, b_out, initial_seq, scaler, steps=24):
 
 
         # Reshape to (1, 1, num_features) for concatenation
-        new_input = new_step.reshape(1, 2, 1)
-
-        # Append new input and remove oldest
+        new_input = new_step.reshape(1, num_features, 1) # Batch, timesteps available (historical datapoints), features 
+        # Batch/sequence_length, nr_features, just a one (timesteps)
+        # Append new input and remove oldest    
         current_seq = np.concatenate([current_seq[1:], new_input], axis=0)
-
-    # Inverse transform the predictions
-    #predictions = scaler.inverse_transform(np.array(predictions).reshape(-1, 2))
-    dummy_second_feature = np.tile(current_seq[-1][1, 0], (steps, 1))  # keep last second feature
-    combined_preds = np.hstack((np.array(predictions).reshape(-1, 1), dummy_second_feature))
-
-    predictions_inverse = scaler.inverse_transform(combined_preds)
     
-    return predictions_inverse
-
-#convert to direction
-def prediction_direction(preds,targets,treshold = 0.0010):
-    direction_val = []
-    direction_tar = []
-    up = 1
-    neutral = 0
-    down = -1
-    for i in range(len(preds)):
-        #prediction var
-        if i > 0: # these basically convert the prediction into an classification instead of regression
-            if (preds[i] - preds[i-1]) > treshold: 
-                direction_val.append(up)
-            elif (preds[i] - preds[i-1]) < -treshold: # downward
-                direction_val.append(down)
-            else: #neutral
-                direction_val.append(neutral)
-            
-            #targets
-            if (targets[i] - targets[i-1]) > treshold: 
-                direction_tar.append(up)
-            elif (targets[i] - targets[i-1]) < -treshold: # downward
-                direction_tar.append(down)
-            else: #neutral
-                direction_tar.append(neutral)
-            
-            if preds[i] > preds[i-1]:
-                pass #up
-            if preds [i] > targets[i]:
-                pass # preds bigger than target
-    correct_dir_pred = []
-    correct_dir_pred_amount = 0
-    #compare the results from the classification
-    for i in range(len(direction_tar)):
-        if direction_tar[i] == direction_val[i]:
-            correct_dir_pred.append(i) # would be nice to store the prediction with the index
-            correct_dir_pred_amount += 1
+    return current_seq #predictions_inverse
 
 
-def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, write_to_file = False):
+
+def run_model(train_data, val_data, scaler, pred_step, epochs = 5, learning_rate = 0.01,write_to_file = False):
     hidden_dim = 128
-    input_dim = 2
+    input_dim = train_data.shape[1]
     seq_len = 32
+
     
     if (write_to_file == True):
         sys.stdout = open("results.txt", "a")
@@ -164,9 +129,16 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
     lstm = LSTMCell(input_dim, hidden_dim)
     W_out = np.random.randn(1, hidden_dim)# * 0.1 #Output layer weights
     b_out = np.zeros((1,1))
+    X,y = create_sequences(train_data, seq_len, pred_step) # Training data
+    X_val, y_val = create_sequences(val_data, seq_len,pred_step)
+    # Check first 3 sequences
+    #for i in range(3):
+    #    seq = X[i][:,0,0]  # extract the first feature from each step
+    #    target = y[i]
+    #    print(f"Sequence {i}: {seq}")
+    #    print(f"Target {i}: {target}")
+    #    print(f"Next value after last in sequence? {'Yes' if abs(seq[-1] - target) > 0 else 'No'}\n")
 
-    X,y = create_sequences(train_data, seq_len) # Training data
-    X_val, y_val = create_sequences(val_data, seq_len)
     for epoch in range(epochs):
         loss_epoch = 0
         for i in range(len(X)):
@@ -179,9 +151,10 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
                 h,c = lstm.forward(x_seq[t],h,c)
             
             y_pred = np.dot(W_out, h) + b_out
-            target = np.array([[y[i]]])
-            error = y_pred - target #y[i]
-            loss = (error ** 2).sum()
+            target = y[i] #np.array(y[i])
+            # L2 Loss
+            error = y_pred - target 
+            loss = (error ** 2).sum() 
             loss_epoch += loss
 
             dW_out = 2 * error * h.T
@@ -212,37 +185,58 @@ def run_model(train_data, val_data, scaler, epochs = 5, learning_rate = 0.01, wr
         diff = 100*(preds[i] - targets[i])/(targets[i]) 
         diff_percentage.append(diff)
     
-    # under construction
-    convert_to_trinary = False
-    if (convert_to_trinary == True):
-        prediction_direction(preds,targets)
+    combined_preds = [ [i, 0] for i in preds]
+    preds_inversed = scaler.inverse_transform(combined_preds)
+    preds_real = [i[0] for i in preds_inversed]
 
-    #print(f"Validation MSE: {mse:.6f}")
-    #print(f"Validation MAE: {mae:.6f}")
-    #print(f"Validation R2: {r2:.4f}")
+    combined_targets_full = [ [i, 0] for i in targets]
+    targets_full_inversed = scaler.inverse_transform(combined_targets_full)
+    combined_target_full_real = [i[0] for i in targets_full_inversed]
+
+    graphing(diff_percentage, preds_real, combined_target_full_real)
+
+
+    #Predict next steps using the last available validation sequence
+    
+    last_sequence = X_val[0]
+    future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, pred_step) # Denormalized in function
+
+
+    print(f"Validation MSE: {mse:.6f}")
+    print(f"Validation MAE: {mae:.6f}")
+    print(f"Validation R2: {r2:.4f}")
     print("Size of Training Data: ", train_data.size)
     print("Number of Epochs: ", epochs)
     print(f"Mean Percentage Difference: {np.mean(diff_percentage):.2f}%")
     print("")
 
-    #print("Predictions : Actual : Percentage Difference")
-    #print(np.c_[preds],np.c_[targets], np.c_[diff_percentage]) # np.c_[] preds[:,0]
-    graphing(diff_percentage, preds, targets)
 
-    #Predict next 24 steps using the last available validation sequence
-    last_sequence = X_val[0]
-    future_preds = predict_future(lstm, W_out, b_out, last_sequence, scaler, steps=24)
+    combined_preds_fut = [ [i[0][0], 0] for i in future_preds] # the i[0][0] shouldnt be needed, somewhere in the future_predictions function something changes
+    preds_inversed_fut = scaler.inverse_transform(combined_preds_fut)
+    preds_real_fut = [i[0] for i in preds_inversed_fut]
+    future_preds = preds_real_fut
+
+    
+    combined_targets = [[t, 0] for t in targets]
+    targets_inverse = scaler.inverse_transform(combined_targets)
+    targets_real = [row[0] for row in targets_inverse]
+
+
+
+
+
     f_diff_percentage = []
     for i in range(len(future_preds)):
-        index = i
-        f_diff = 100*(future_preds[i] - targets[i])/(targets[i])
+        f_diff = 100*(future_preds[i] - targets_real[i])/(targets_real[i])
         f_diff_percentage.append(f_diff)
 
-    print("\nFuture Predictions for the Next 24 Steps:")
-    print(future_preds[:,0].flatten())
-    print("Percentage difference:", np.c_[f_diff_percentage])
+    #print(f"\nFuture Predictions for the Next {pred_step} Steps:")
+    #print(future_preds[:-pred_step])
+    #print("Target Values:")
+    #print(targets_real[:-pred_step])
+    #print("Percentage difference:", np.c_[f_diff_percentage])
     print (f"Mean Percentage Difference: {np.mean(f_diff_percentage):.2f}%")
-    graphing(f_diff_percentage, future_preds[:,0], targets)
+    graphing(f_diff_percentage, future_preds[:-pred_step], targets_real)
 
     if (write_to_file == True):
         sys.stdout.close()

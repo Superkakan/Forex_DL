@@ -13,13 +13,15 @@ def split_data(data, ratio=0.7):
     return train, test
 
 def get_data(ratio=0.7):
+
+    #data\usdsek\DAT_XLSX_USDSEK_M1_2023.csv data/yfinance_data/eurusd_1d.csv
     df = pd.read_csv("data/yfinance_data/eurusd_1d.csv")  # skip the Ticker row
     df = df.rename(columns={"Date": "Datetime"})  # Rename 'Price' to 'Datetime'
     df = df.rename(columns={"Close/Last" : "Close"})
     df["Datetime"] = pd.to_datetime(df["Datetime"])
     df["Date"] = df["Datetime"].dt.date  # extract date part for sentiment merge
     df = df.drop(columns="Volume")
-
+    df = df.sort_values(by="Date",)
     sentiment = news_data_preproceessing()
     sentiment["Date"] = pd.to_datetime(sentiment["Date"]).dt.date
 
@@ -36,7 +38,23 @@ def get_data(ratio=0.7):
     print("Train shape:", train.shape, "Test shape:", test.shape)
     return train, test, scaler
 
-    
+
+# Find time for active market, find wrong numbers etc
+
+def get_1m_forex_data(data_path, ratio = 0.7):
+    df = pd.read_csv("data/usdsek/DAT_XLSX_USDSEK_M1_2023.csv", sep=";",decimal=",")
+    df = df.rename(columns={df.columns[0] : "Time"})
+    df = df.rename(columns={df.columns[4] : "Price"})
+    df = df.iloc[:,[0,4]]
+    df["Time"] = pd.to_datetime(df["Time"])
+    df["Price"] = df["Price"].astype(float)
+    df = df[["Price"]]
+
+    scaler = MinMaxScaler()
+    df_scaled = scaler.fit_transform(df)
+    train, test = train_test_split(df_scaled[:30000])
+    return train, test, scaler
+
 
 #Ecb positive == good
 
@@ -50,7 +68,7 @@ def news_data_preproceessing():
     for df in [ecb_data, fed_article_data, fed_speeches_data]:
         df.drop(columns=["Title", "Reasoning"], inplace=True)
 
-    # Sentiment maps
+    # Sentiment maps - Could add sentiment "fade"
     sentiment_map_eur = {
         "Very Negative": -0.02,
         "Negative": -0.01,
