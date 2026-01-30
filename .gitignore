@@ -1,5 +1,9 @@
 # Own
 data/
+model/Forex_DL.code-workspace
+__pycache__
+.vscode/settings.json
+formelblad-la-x2.pdf
 
 # Compiled source #
 ###################
