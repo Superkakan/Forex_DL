@@ -19,7 +19,7 @@ yfinance
 pandas
 sklearn
 
-Anyway, next step can be to include intraday prices of currencies or economic indicators, for a more accurate prediction.<br />
+Next step can be to include intraday prices of currencies or economic indicators, for a more accurate prediction.<br />
 The impact of the semantic data is minimal, could research on how to make this weight in more.<br />
 The tuning/testing of hyperparameter can also be automated
 
