@@ -29,14 +29,9 @@ All the saved graphs that doesnt have the timeframe in the name, have a granuali
 
 ## Some graphs:
 
-### 1d, 50 epochs, 0.01 LR, 24 days future prediction
-<img width="1920" height="975" alt="1d 50e 0 01 LR" src="https://github.com/user-attachments/assets/f27555bc-b12a-43d5-94db-f5f229d8d0cc" />
 
-### 1d, 50 epochs, 0.01 LR
-<img width="1920" height="975" alt="1d 50e 0 01 LR 24days" src="https://github.com/user-attachments/assets/7be5f08d-074a-49f5-9263-908808461ea6" />
+### 1m, 10 epochs, 0.001 LR
+<img width="2560" height="1335" alt="1m 10 Epochs 0 001 LR" src="https://github.com/user-attachments/assets/faaa1384-bd90-4f28-a6c2-c17c8412831f" />
 
-### 1d, 340 epochs, 0.001 LR 
-<img width="1920" height="975" alt="1d 340 epochs 0 001 LR" src="https://github.com/user-attachments/assets/3d4180b6-d637-4b51-a141-0556bb04f760" />
-
-### 1d, 340 epochs, 0.001 LR, 24 days future prediction
-<img width="1920" height="975" alt="1d 340e 0 001 LR 24days" src="https://github.com/user-attachments/assets/b95dfa97-02bd-45ca-8778-8eea462c0f66" />
+### 1m, 10 epochs, 0.001 LR, Future Prediction
+<img width="2560" height="1335" alt="1m 10 Epochs 0 001 LR Future" src="https://github.com/user-attachments/assets/5325e52f-2bbc-4820-a002-914e42f2a0a2" />
